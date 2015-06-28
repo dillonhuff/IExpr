@@ -179,3 +179,8 @@ Proof.
           apply constValRec_works_on_allConstants].
 Qed.
 
+Fixpoint tryFoldConstantsRec (i : iexpr) : iexpr :=
+  match constValRec i with
+    | Some c => IConst c
+    | None => i
+  end.

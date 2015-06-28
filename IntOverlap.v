@@ -10,12 +10,12 @@ Definition mkRange (s e: Z) :=
 Definition range := Z -> Prop.
 
 Definition mkRectangle (horizontalRange verticalRange : range) :=
-  fun p : Z => In Z horizontalRange p /\ In Z verticalRange p.
+  fun pnt : prod Z Z => In Z horizontalRange (fst pnt) /\ In Z verticalRange (snd pnt).
 
-Definition rectangle := Z -> Prop.
+Definition rectangle := prod Z Z -> Prop.
 
 Definition noOverlap (r1 r2 : rectangle) :=
-  Intersection Z r1 r2 = Empty_set Z.
+  Intersection (prod Z Z) r1 r2 = Empty_set (prod Z Z).
 
 Theorem trivial_1 :
   In Z (mkRange 0 20) 13.
