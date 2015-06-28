@@ -1,6 +1,7 @@
 Require Import ZArith.
 Require Import Sets.Ensembles.
 Require Import Omega.
+Require Import Bool.
 
 Open Scope Z_scope.
 
@@ -22,4 +23,3 @@ Theorem trivial_1 :
 Proof.
   unfold In; unfold mkRange; omega.
 Qed.
-

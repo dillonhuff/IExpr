@@ -13,6 +13,51 @@ Inductive iexpr : Set :=
 | IAdd : iexpr -> iexpr -> iexpr
 | IMul : iexpr -> iexpr -> iexpr.
 
+Fixpoint sameIVar (i j : iexpr) : bool :=
+  match i with
+    | IVar v1 => 
+      match j with
+        | IVar v2 =>
+          match Z.compare v1 v2 with
+            | Eq => true
+            | _ => false
+          end
+        | _ => false
+      end
+    | _ => false
+  end.
+
+Fixpoint sameIConst (i j : iexpr) : bool :=
+  match i with
+    | IConst v1 => 
+      match j with
+        | IConst v2 =>
+          match Z.compare v1 v2 with
+            | Eq => true
+            | _ => false
+          end
+        | _ => false
+      end
+    | _ => false
+  end.
+
+Fixpoint iexprEq (i j : iexpr) : bool :=
+  match i with
+    | IAdd il ir =>
+      match j with
+        | IAdd jl jr =>
+          (iexprEq il jl) && (iexprEq ir jr)
+        | _ => false
+      end
+    | IMul il ir =>
+      match j with
+        | IMul jl jr => (iexprEq il jl) && (iexprEq ir jr)
+        | _ => false
+      end
+    | IConst _ => sameIConst i j
+    | IVar _ => sameIVar i j
+  end.
+
 Fixpoint isConst (i : iexpr) : bool :=
   match i with
     | IConst _ => true

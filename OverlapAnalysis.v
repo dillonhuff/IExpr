@@ -1,23 +1,6 @@
 Require Import IExpr.
+Require Import IExprOverlap.
 Require Import IntOverlap.
-
-Inductive irectangle : Set :=
-| IRectangle : iexpr -> iexpr -> iexpr -> iexpr -> irectangle.
-
-Fixpoint foldIRectangleConstants (r : irectangle) : irectangle :=
-  match r with
-    | IRectangle rs re cs ce =>
-      IRectangle (tryFoldConstantsRec rs)
-                 (tryFoldConstantsRec re)
-                 (tryFoldConstantsRec cs)
-                 (tryFoldConstantsRec ce)
-  end.
-
-Fixpoint isConstIRectangle (r : irectangle) : bool :=
-  match foldIRectangleConstants r with
-    | IRectangle (IConst _) (IConst _) (IConst _) (IConst _) => true
-    | _ => false
-  end.
 
 Fixpoint toIntRectangle (r : irectangle) : option rectangle :=
   match foldIRectangleConstants r with
@@ -41,3 +24,4 @@ Fixpoint conservativeOverlap (r1 r2 : irectangle) : Prop :=
     isConstIRectangle r1 = true ->
     isConstIRectangle r2 = true ->
     conservativeOverlap r1 r2 = noOverlap r1 r2.*)
+
